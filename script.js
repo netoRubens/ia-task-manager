@@ -3,61 +3,68 @@ const analyzeButton = document.querySelector("#analyzeButton");
 const result = document.querySelector("#result");
 
 analyzeButton.addEventListener("click", async () => {
+  const text = message.value.trim();
 
-    const text = message.value.trim();
+  if (text === "") {
+    result.innerHTML = "<p>Digite uma mensagem para analisar.</p>";
+    return;
+  }
 
-    if (text === "") {
-        result.innerHTML = "<p>Digite uma mensagem para analisar.</p>";
-        return;
+  result.innerHTML = "<p>🤖 Analisando mensagem...</p>";
+
+  try {
+    const apiUrl =
+      window.location.hostname === "localhost"
+        ? "http://localhost:3000/analyze"
+        : "/api/analyze";
+
+    const response = await fetch(apiUrl, {
+      method: "POST",
+
+      headers: {
+        "Content-Type": "application/json",
+      },
+
+      body: JSON.stringify({
+        message: text,
+      }),
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.error || "Erro ao analisar mensagem.");
     }
 
-    result.innerHTML = "<p>🤖 Analisando mensagem...</p>";
+    const analysis = data.result;
 
-    try {
+    // Extrai as informações retornadas pela IA
+    const category =
+      analysis.match(/Categoria:\s*(.*)/i)?.[1] || "Não identificada";
+    const priority =
+      analysis.match(/Prioridade:\s*(.*)/i)?.[1] || "Não identificada";
+    const summary = analysis.match(/Resumo:\s*(.*)/i)?.[1] || "Não disponível";
+    const suggestedResponse =
+      analysis.match(/Resposta sugerida:\s*([\s\S]*)/i)?.[1] ||
+      "Não disponível";
 
-        const response = await fetch("http://localhost:3000/analyze", {
-            method: "POST",
+    // Define cor e emoji da prioridade
+    const priorityText = priority.toLowerCase();
 
-            headers: {
-                "Content-Type": "application/json"
-            },
+    let priorityClass = "priority-medium";
+    let priorityEmoji = "🟡";
 
-            body: JSON.stringify({
-                message: text
-            })
-        });
+    if (priorityText.includes("alta")) {
+      priorityClass = "priority-high";
+      priorityEmoji = "🔴";
+    }
 
-        const data = await response.json();
+    if (priorityText.includes("baixa")) {
+      priorityClass = "priority-low";
+      priorityEmoji = "🟢";
+    }
 
-        if (!response.ok) {
-            throw new Error(data.error || "Erro ao analisar mensagem.");
-        }
-
-        const analysis = data.result;
-
-        // Extrai as informações retornadas pela IA
-        const category = analysis.match(/Categoria:\s*(.*)/i)?.[1] || "Não identificada";
-        const priority = analysis.match(/Prioridade:\s*(.*)/i)?.[1] || "Não identificada";
-        const summary = analysis.match(/Resumo:\s*(.*)/i)?.[1] || "Não disponível";
-        const suggestedResponse = analysis.match(/Resposta sugerida:\s*([\s\S]*)/i)?.[1] || "Não disponível";
-
-        // Define cor e emoji da prioridade
-        const priorityText = priority.toLowerCase();
-
-        let priorityClass = "priority-medium";
-        let priorityEmoji = "🟡";
-
-        if (priorityText.includes("alta")) {
-            priorityClass = "priority-high";
-            priorityEmoji = "🔴";
-        }
-
-        if (priorityText.includes("baixa")) {
-            priorityClass = "priority-low";
-            priorityEmoji = "🟢";
-        }
-
-        result.innerHTML = `
+    result.innerHTML = `
             <h2>🤖 Análise</h2>
 
             <p>
@@ -88,13 +95,11 @@ analyzeButton.addEventListener("click", async () => {
                 ${suggestedResponse}
             </p>
         `;
+  } catch (error) {
+    console.error(error);
 
-    } catch (error) {
-
-        console.error(error);
-
-        result.innerHTML = `
+    result.innerHTML = `
             <p>❌ Ocorreu um erro ao analisar a mensagem.</p>
         `;
-    }
+  }
 });
