@@ -1,0 +1,193 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #0a0a0a;
+    color: #ffffff;
+    min-height: 100vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 30px;
+}
+
+/* CONTAINER PRINCIPAL */
+
+main {
+    width: 100%;
+    max-width: 760px;
+
+    background: #111111;
+    border: 1px solid #2a2a2a;
+    border-radius: 20px;
+
+    padding: 40px;
+
+    box-shadow:
+        0 20px 60px rgba(0, 0, 0, 0.5);
+}
+
+/* CABEÇALHO */
+
+h1 {
+    font-size: 34px;
+    letter-spacing: -1px;
+    margin-bottom: 10px;
+}
+
+main > p {
+    color: #888888;
+    font-size: 15px;
+    margin-bottom: 30px;
+}
+
+/* CAMPO DE TEXTO */
+
+textarea {
+    width: 100%;
+    min-height: 170px;
+
+    background: #0a0a0a;
+    color: #ffffff;
+
+    border: 1px solid #2d2d2d;
+    border-radius: 12px;
+
+    padding: 18px;
+
+    font-size: 16px;
+    font-family: inherit;
+
+    resize: vertical;
+    outline: none;
+
+    transition: 0.2s;
+}
+
+textarea::placeholder {
+    color: #666666;
+}
+
+textarea:focus {
+    border-color: #ffffff;
+}
+
+/* BOTÃO */
+
+button {
+    width: 100%;
+
+    margin-top: 15px;
+    padding: 15px;
+
+    border: none;
+    border-radius: 12px;
+
+    background: #ffffff;
+    color: #000000;
+
+    font-size: 15px;
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+button:hover {
+    background: #dddddd;
+    transform: translateY(-1px);
+}
+
+/* RESULTADO */
+
+#result {
+    margin-top: 30px;
+
+    background: #0a0a0a;
+    border: 1px solid #2a2a2a;
+    border-radius: 14px;
+
+    padding: 25px;
+}
+
+#result h2 {
+    font-size: 20px;
+    margin-bottom: 18px;
+}
+
+.analysis-result {
+    color: #d4d4d4;
+    line-height: 1.8;
+    font-size: 15px;
+}
+
+/* DESTAQUES DA ANÁLISE */
+
+.category {
+    display: inline-block;
+
+    padding: 5px 10px;
+
+    border-radius: 6px;
+
+    background: #252525;
+    color: #ffffff;
+
+    font-weight: bold;
+}
+
+.priority {
+    display: inline-block;
+
+    padding: 5px 10px;
+
+    border-radius: 6px;
+
+    font-weight: bold;
+}
+
+/* PRIORIDADES */
+
+.priority-low {
+    background: #16351f;
+    color: #5ee88a;
+}
+
+.priority-medium {
+    background: #3a3012;
+    color: #f5d76e;
+}
+
+.priority-high {
+    background: #3b1717;
+    color: #ff7777;
+}
+
+/* RESPONSIVO */
+
+@media (max-width: 600px) {
+
+    body {
+        padding: 15px;
+    }
+
+    main {
+        padding: 25px;
+        border-radius: 15px;
+    }
+
+    h1 {
+        font-size: 28px;
+    }
+
+    textarea {
+        min-height: 140px;
+    }
+}
