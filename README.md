@@ -70,6 +70,7 @@ node local-server.js
 Depois acesse:
 
 http://localhost:3000
+
 🔐 Variáveis de ambiente
 
 O projeto utiliza a seguinte variável:
