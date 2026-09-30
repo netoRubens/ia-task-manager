@@ -18,17 +18,22 @@ analyzeButton.addEventListener("click", async () => {
         ? "http://localhost:3000/analyze"
         : "/api/analyze";
 
-    const response = await fetch(apiUrl, {
-      method: "POST",
+    const response = await fetch(
+    window.location.hostname === "localhost"
+        ? "http://localhost:3000/analyze"
+        : "/api/analyze",
+    {
+        method: "POST",
 
-      headers: {
-        "Content-Type": "application/json",
-      },
+        headers: {
+            "Content-Type": "application/json"
+        },
 
-      body: JSON.stringify({
-        message: text,
-      }),
-    });
+        body: JSON.stringify({
+            message: text
+        })
+    }
+);
 
     const data = await response.json();
 

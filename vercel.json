@@ -1,9 +1,0 @@
-{
-  "version": 2,
-  "rewrites": [
-    {
-      "source": "/analyze",
-      "destination": "/api/analyze"
-    }
-  ]
-}
